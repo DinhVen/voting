@@ -27,7 +27,7 @@ const CandidateSignup = () => {
     const trimmedName = formData.name.trim();
     const trimmedMssv = formData.mssv.trim();
     const trimmedMajor = formData.major.trim();
-    const trimmedImage = formData.image.trim();
+    const trimmedImage = formData.image; // Base64 or URL
     const trimmedBio = formData.bio.trim();
 
     // Validation
@@ -41,10 +41,6 @@ const CandidateSignup = () => {
     }
     if (!trimmedMajor) {
       setError('Vui lòng nhập ngành/khoa');
-      return;
-    }
-    if (trimmedImage && !/^https?:\/\/.+/.test(trimmedImage)) {
-      setError('URL ảnh không hợp lệ (phải bắt đầu bằng http:// hoặc https://)');
       return;
     }
     if (trimmedBio.length > 500) {
@@ -216,21 +212,78 @@ const CandidateSignup = () => {
                   </div>
                 </div>
 
-                {/* Image URL */}
+                {/* Image Upload */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
-                    URL ảnh đại diện
+                    Ảnh đại diện
                   </label>
-                  <input
-                    type="url"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    className="w-full border dark:border-gray-600 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-all duration-300"
-                    placeholder="https://example.com/image.jpg"
-                  />
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    Link ảnh từ internet (không bắt buộc)
-                  </p>
+                  <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          if (file.size > 5 * 1024 * 1024) {
+                            setError('Kích thước ảnh không được vượt quá 5MB');
+                            return;
+                          }
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            setFormData({ ...formData, image: reader.result });
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                      className="hidden"
+                      id="image-upload"
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className="cursor-pointer flex flex-col items-center gap-2"
+                    >
+                      {formData.image ? (
+                        <div className="space-y-2">
+                          <img
+                            src={formData.image}
+                            alt="Preview"
+                            className="w-32 h-32 object-cover rounded-xl mx-auto"
+                          />
+                          <p className="text-sm text-green-600 dark:text-green-400 font-semibold">
+                            ✓ Đã chọn ảnh
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            Click để thay đổi
+                          </p>
+                        </div>
+                      ) : (
+                        <>
+                          <svg
+                            className="w-12 h-12 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                            />
+                          </svg>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            <span className="text-blue-600 dark:text-blue-400 font-semibold">
+                              Click để chọn ảnh
+                            </span>{' '}
+                            hoặc kéo thả vào đây
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            PNG, JPG, GIF tối đa 5MB
+                          </p>
+                        </>
+                      )}
+                    </label>
+                  </div>
                 </div>
 
                 {/* Bio */}
