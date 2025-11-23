@@ -6,11 +6,11 @@ import WalletConnect from './WalletConnect';
 import { Menu, X, Moon, Sun } from 'lucide-react';
 
 const navItems = (isAdmin) => [
-  { to: '/', label: 'Trang chu' },
-  { to: '/claim', label: 'Nhan token' },
-  { to: '/vote', label: 'Bo phieu' },
-  { to: '/apply', label: 'Dang ky ung vien' },
-  ...(isAdmin ? [{ to: '/admin', label: 'Quan tri' }] : []),
+  { to: '/', label: 'Trang chủ' },
+  { to: '/claim', label: 'Nhận token' },
+  { to: '/vote', label: 'Bỏ phiếu' },
+  { to: '/apply', label: 'Đăng ký ứng viên' },
+  ...(isAdmin ? [{ to: '/admin', label: 'Quản trị' }] : []),
 ];
 
 const Navbar = () => {
