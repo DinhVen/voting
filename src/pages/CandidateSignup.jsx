@@ -3,6 +3,8 @@ import { Web3Context } from '../context/Web3Context';
 
 const API_BASE = import.meta.env.VITE_OTP_API || 'http://localhost:3001';
 const UPLOAD_ENDPOINT = import.meta.env.VITE_UPLOAD_URL || '';
+const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || '';
+const CLOUDINARY_CLOUD = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || '';
 
 const CandidateSignup = () => {
   const { votingContract, currentAccount, setIsLoading } = useContext(Web3Context);
@@ -49,15 +51,23 @@ const CandidateSignup = () => {
     try {
       const formData = new FormData();
       formData.append('file', file);
+
+      // If using Cloudinary direct upload, require preset
+      if (CLOUDINARY_PRESET && CLOUDINARY_CLOUD && UPLOAD_ENDPOINT.includes('cloudinary.com')) {
+        formData.append('upload_preset', CLOUDINARY_PRESET);
+        formData.append('cloud_name', CLOUDINARY_CLOUD);
+      }
+
       const res = await fetch(UPLOAD_ENDPOINT, {
         method: 'POST',
         body: formData,
       });
       const data = await res.json();
-      if (!res.ok || !data?.url) {
+      const url = data?.secure_url || data?.url;
+      if (!res.ok || !url) {
         throw new Error(data?.error || 'Upload thất bại');
       }
-      setImageUrl(data.url);
+      setImageUrl(url);
       setSuccess('Upload ảnh thành công');
     } catch (err) {
       setError(err.message || 'Upload thất bại. Vui lòng thử lại');
