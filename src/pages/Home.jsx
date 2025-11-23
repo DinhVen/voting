@@ -58,7 +58,7 @@ const Home = () => {
                   <svg className="w-20 h-20 mx-auto mb-3 opacity-90" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                   </svg>
-                  <h3 className="text-2xl font-black mb-1">QNU Voting</h3>
+                  <h3 className="text-2xl font-black mb-1">Nét Đẹp Tuổi Sinh Viên QNU</h3>
                   <p className="text-white/90 font-medium">Minh bạch - Công bằng - An toàn</p>
                 </div>
               </div>
