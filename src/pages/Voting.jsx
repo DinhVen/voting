@@ -133,12 +133,26 @@ const Voting = () => {
       <div className="container mx-auto py-12 px-4 relative z-10 animate-fadeIn">
         {/* Header */}
         <div className="text-center mb-12 space-y-4">
-          <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-5 py-2 rounded-full shadow-lg border border-blue-200/50 dark:border-blue-500/30 mb-4">
+          <div className={`inline-flex items-center gap-2 backdrop-blur-md px-5 py-2 rounded-full shadow-lg border mb-4 ${
+            voteStatus.active && isWithinVoteWindow
+              ? 'bg-blue-100/80 dark:bg-blue-900/30 border-blue-300 dark:border-blue-500/30'
+              : 'bg-gray-100/80 dark:bg-gray-800/80 border-gray-300 dark:border-gray-700'
+          }`}>
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              {voteStatus.active && isWithinVoteWindow && (
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              )}
+              <span className={`relative inline-flex rounded-full h-2 w-2 ${
+                voteStatus.active && isWithinVoteWindow ? 'bg-blue-500' : 'bg-gray-500'
+              }`}></span>
             </span>
-            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Đang diễn ra</span>
+            <span className={`text-sm font-semibold ${
+              voteStatus.active && isWithinVoteWindow
+                ? 'text-blue-700 dark:text-blue-300'
+                : 'text-gray-700 dark:text-gray-400'
+            }`}>
+              {voteStatus.active && isWithinVoteWindow ? 'Đang diễn ra' : 'Đang đóng'}
+            </span>
           </div>
           
           <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white">
