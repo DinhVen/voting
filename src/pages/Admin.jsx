@@ -19,6 +19,10 @@ const Admin = () => {
     voteStart: '',
     voteEnd: '',
   });
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all'); // all, active, inactive
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(6);
 
   const API_BASE = import.meta.env.VITE_OTP_API || 'http://localhost:3001';
   const ADMIN_API_KEY = import.meta.env.VITE_ADMIN_API_KEY || process.env.ADMIN_API_KEY;
@@ -278,12 +282,83 @@ const Admin = () => {
     setIsLoading(false);
   };
 
+  const exportToCSV = () => {
+    const headers = ['ID', 'Tên', 'MSSV', 'Ngành', 'Số phiếu', 'Trạng thái'];
+    const rows = candidates.map((c) => [
+      c.id,
+      c.name,
+      c.mssv,
+      c.major,
+      c.votes,
+      c.isActive ? 'Đang mở' : 'Đã khóa',
+    ]);
+    const csvContent = [headers, ...rows].map((row) => row.join(',')).join('\n');
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `ket-qua-bau-cu-${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+  };
+
+  const exportToJSON = () => {
+    const data = {
+      exportDate: new Date().toISOString(),
+      totalCandidates: candidates.length,
+      totalVotes: candidates.reduce((sum, c) => sum + c.votes, 0),
+      candidates: candidates.map((c) => ({
+        id: c.id,
+        name: c.name,
+        mssv: c.mssv,
+        major: c.major,
+        votes: c.votes,
+        isActive: c.isActive,
+        image: c.image,
+        bio: c.bio,
+      })),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `ket-qua-bau-cu-${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+  };
+
+  const filteredCandidates = candidates.filter((c) => {
+    const matchSearch =
+      c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.mssv.includes(searchTerm) ||
+      c.major.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchStatus =
+      filterStatus === 'all' ||
+      (filterStatus === 'active' && c.isActive) ||
+      (filterStatus === 'inactive' && !c.isActive);
+    return matchSearch && matchStatus;
+  });
+
+  const totalPages = Math.ceil(filteredCandidates.length / itemsPerPage);
+  const paginatedCandidates = filteredCandidates.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const stats = {
+    totalCandidates: candidates.length,
+    activeCandidates: candidates.filter((c) => c.isActive).length,
+    totalVotes: candidates.reduce((sum, c) => sum + c.votes, 0),
+    pendingRequests: requests.filter((r) => !r.approved && !r.rejected).length,
+    fraudDetected: conflicts.length,
+  };
+
   useEffect(() => {
     loadStatus();
     loadCandidates();
     loadRequests();
     loadConflicts();
   }, [votingContract]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, filterStatus]);
 
   if (!isAdmin) {
     return (
@@ -305,6 +380,30 @@ const Admin = () => {
           <div className="flex gap-4 mt-4 flex-wrap">
             <div className="bg-white/15 px-4 py-2 rounded-full text-sm">Claim: {status.claim ? 'Đang mở' : 'Đang đóng'}</div>
             <div className="bg-white/15 px-4 py-2 rounded-full text-sm">Vote: {status.vote ? 'Đang mở' : 'Đang đóng'}</div>
+          </div>
+        </div>
+
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{stats.totalCandidates}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Tổng ứng viên</div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+            <div className="text-3xl font-bold text-green-600 dark:text-green-400">{stats.activeCandidates}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Đang hoạt động</div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+            <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">{stats.totalVotes}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Tổng phiếu bầu</div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+            <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{stats.pendingRequests}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Yêu cầu chờ</div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+            <div className="text-3xl font-bold text-red-600 dark:text-red-400">{stats.fraudDetected}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Gian lận phát hiện</div>
           </div>
         </div>
 
@@ -501,19 +600,54 @@ const Admin = () => {
         </div>
 
         <div className="bg-white dark:bg-gray-800 p-6 shadow-lg rounded-xl">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
             <h3 className="font-bold text-lg dark:text-white">Danh sách ứng viên</h3>
-            <button onClick={loadCandidates} className="text-qnu-500 dark:text-blue-400 underline hover:text-qnu-600 dark:hover:text-blue-300 transition-all">
-              Tải lại
-            </button>
+            <div className="flex gap-2 flex-wrap">
+              <button onClick={exportToCSV} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-all text-sm font-semibold">
+                Export CSV
+              </button>
+              <button onClick={exportToJSON} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all text-sm font-semibold">
+                Export JSON
+              </button>
+              <button onClick={loadCandidates} className="text-qnu-500 dark:text-blue-400 underline hover:text-qnu-600 dark:hover:text-blue-300 transition-all">
+                Tải lại
+              </button>
+            </div>
           </div>
+
+          {/* Search and Filter */}
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <input
+              type="text"
+              placeholder="Tìm kiếm theo tên, MSSV, ngành..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="border dark:border-gray-600 p-3 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="border dark:border-gray-600 p-3 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 transition-all"
+            >
+              <option value="all">Tất cả trạng thái</option>
+              <option value="active">Đang hoạt động</option>
+              <option value="inactive">Đã khóa</option>
+            </select>
+          </div>
+
           {loadingCandidates ? (
             <p className="dark:text-gray-300">Đang tải...</p>
-          ) : candidates.length === 0 ? (
-            <p className="text-gray-500 dark:text-gray-400">Chưa có ứng viên.</p>
+          ) : filteredCandidates.length === 0 ? (
+            <p className="text-gray-500 dark:text-gray-400">
+              {candidates.length === 0 ? 'Chưa có ứng viên.' : 'Không tìm thấy ứng viên phù hợp.'}
+            </p>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {candidates.map((c) => (
+            <>
+              <div className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Hiển thị {paginatedCandidates.length} / {filteredCandidates.length} ứng viên
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {paginatedCandidates.map((c) => (
                 <div key={c.id} className="border dark:border-gray-600 rounded-lg p-4 space-y-2 bg-gray-50 dark:bg-gray-700/50 hover:shadow-lg transition-all duration-300">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">ID #{c.id}</span>
@@ -541,6 +675,30 @@ const Admin = () => {
                 </div>
               ))}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2 mt-6">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-semibold"
+                >
+                  Trước
+                </button>
+                <span className="text-gray-700 dark:text-gray-300 font-semibold">
+                  Trang {currentPage} / {totalPages}
+                </span>
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-semibold"
+                >
+                  Sau
+                </button>
+              </div>
+            )}
+            </>
           )}
         </div>
       </div>
