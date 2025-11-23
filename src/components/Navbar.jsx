@@ -48,18 +48,17 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center gap-1">
           {[
-            { to: '/', label: 'Trang chủ', icon: '🏠' },
-            { to: '/claim', label: 'Nhận token', icon: '🎫' },
-            { to: '/vote', label: 'Bỏ phiếu', icon: '🗳️' },
-            ...(isAdmin ? [{ to: '/admin', label: 'Quản trị', icon: '⚙️' }] : []),
+            { to: '/', label: 'Trang chủ' },
+            { to: '/claim', label: 'Nhận token' },
+            { to: '/vote', label: 'Bỏ phiếu' },
+            ...(isAdmin ? [{ to: '/admin', label: 'Quản trị' }] : []),
           ].map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className="px-4 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 font-semibold transition-all duration-300 hover:scale-105 flex items-center gap-2"
+              className="px-4 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 font-semibold transition-all duration-300 hover:scale-105"
             >
-              <span>{item.icon}</span>
-              <span>{item.label}</span>
+              {item.label}
             </Link>
           ))}
         </div>
@@ -88,19 +87,18 @@ const Navbar = () => {
         <div className="md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700 animate-slideDown">
           <div className="flex flex-col gap-2 mt-4">
             {[
-              { to: '/', label: 'Trang chủ', icon: '🏠' },
-              { to: '/claim', label: 'Nhận token', icon: '🎫' },
-              { to: '/vote', label: 'Bỏ phiếu', icon: '🗳️' },
-              ...(isAdmin ? [{ to: '/admin', label: 'Quản trị', icon: '⚙️' }] : []),
+              { to: '/', label: 'Trang chủ' },
+              { to: '/claim', label: 'Nhận token' },
+              { to: '/vote', label: 'Bỏ phiếu' },
+              ...(isAdmin ? [{ to: '/admin', label: 'Quản trị' }] : []),
             ].map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className="flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-xl transition transform hover:translate-x-1 text-gray-700 dark:text-gray-300 font-semibold"
+                className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-xl transition transform hover:translate-x-1 text-gray-700 dark:text-gray-300 font-semibold"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="text-xl">{item.icon}</span>
-                <span>{item.label}</span>
+                {item.label}
               </Link>
             ))}
             <div className="px-4 pt-3 border-t border-gray-200 dark:border-gray-700 flex items-center gap-3">

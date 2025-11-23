@@ -94,13 +94,12 @@ const Home = () => {
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 {[
-                  { label: 'Claim mở', time: schedule.claimStart, icon: '🎫', color: 'from-green-400 to-emerald-500' },
-                  { label: 'Claim đóng', time: schedule.claimEnd, icon: '⏰', color: 'from-orange-400 to-red-500' },
-                  { label: 'Vote mở', time: schedule.voteStart, icon: '🗳️', color: 'from-blue-400 to-cyan-500' },
-                  { label: 'Vote đóng', time: schedule.voteEnd, icon: '🏁', color: 'from-purple-400 to-pink-500' },
+                  { label: 'Claim mở', time: schedule.claimStart, color: 'from-green-400 to-emerald-500' },
+                  { label: 'Claim đóng', time: schedule.claimEnd, color: 'from-orange-400 to-red-500' },
+                  { label: 'Vote mở', time: schedule.voteStart, color: 'from-blue-400 to-cyan-500' },
+                  { label: 'Vote đóng', time: schedule.voteEnd, color: 'from-purple-400 to-pink-500' },
                 ].map((item, idx) => (
                   <div key={idx} className="group relative p-4 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-800/50 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border border-gray-200/50 dark:border-gray-600/50">
-                    <div className="text-2xl mb-2">{item.icon}</div>
                     <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">{item.label}</p>
                     <p className="text-sm font-bold text-gray-900 dark:text-white">{formatTime(item.time)}</p>
                     <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300`}></div>
@@ -112,19 +111,18 @@ const Home = () => {
               <div className="space-y-3">
                 <h4 className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Quy trình</h4>
                 {[
-                  { step: '01', title: 'Xác thực email', desc: 'Email sinh viên QNU', icon: '📧' },
-                  { step: '02', title: 'Nhận token', desc: 'Mỗi ví 1 token', icon: '🪙' },
-                  { step: '03', title: 'Bỏ phiếu', desc: 'Chọn ứng viên', icon: '✅' },
+                  { step: '01', title: 'Xác thực email', desc: 'Email sinh viên QNU' },
+                  { step: '02', title: 'Nhận token', desc: 'Mỗi ví 1 token' },
+                  { step: '03', title: 'Bỏ phiếu', desc: 'Chọn ứng viên' },
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-300 group cursor-pointer">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
-                      {item.icon}
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform text-xl">
+                      {item.step}
                     </div>
                     <div className="flex-1">
                       <p className="font-bold text-gray-900 dark:text-white">{item.title}</p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
                     </div>
-                    <div className="text-2xl font-black text-gray-200 dark:text-gray-700">{item.step}</div>
                   </div>
                 ))}
               </div>
