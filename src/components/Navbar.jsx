@@ -9,6 +9,7 @@ const navItems = (isAdmin) => [
   { to: '/', label: 'Trang chủ' },
   { to: '/claim', label: 'Nhận token' },
   { to: '/vote', label: 'Bỏ phiếu' },
+  { to: '/results', label: 'Kết quả' },
   { to: '/apply', label: 'Đăng ký ứng viên' },
   ...(isAdmin ? [{ to: '/admin', label: 'Quản trị' }] : []),
 ];
