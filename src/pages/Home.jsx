@@ -79,18 +79,34 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Right Content - Schedule Card */}
+          {/* Right Content - Hero Image */}
           <div className="relative animate-scaleIn">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 rounded-3xl blur-2xl opacity-20"></div>
-            <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20 dark:border-gray-700/50">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+            <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20 dark:border-gray-700/50">
+              {/* Hero Image */}
+              <div className="relative h-64 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 overflow-hidden">
+                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center text-white p-6">
+                    <svg className="w-24 h-24 mx-auto mb-4 opacity-90" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                    </svg>
+                    <h3 className="text-2xl font-black mb-2">QNU Voting 2025</h3>
+                    <p className="text-white/90 font-medium">Nét Đẹp Sinh Viên</p>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Lịch trình</h3>
               </div>
+              
+              {/* Schedule Info */}
+              <div className="p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Lịch trình</h3>
+                </div>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 {[
@@ -123,6 +139,96 @@ const Home = () => {
                       <p className="font-bold text-gray-900 dark:text-white">{item.title}</p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Help Section */}
+        <div className="mt-20 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4">
+              Hướng dẫn sử dụng
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              Làm theo các bước đơn giản để tham gia bầu chọn
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                icon: (
+                  <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                ),
+                title: 'Bước 1: Xác thực Email',
+                desc: 'Sử dụng email sinh viên QNU (@st.qnu.edu.vn) để xác thực danh tính',
+                color: 'from-blue-500 to-cyan-500',
+              },
+              {
+                icon: (
+                  <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                ),
+                title: 'Bước 2: Nhận Token',
+                desc: 'Kết nối ví MetaMask và nhận 1 token QSV để bỏ phiếu',
+                color: 'from-purple-500 to-pink-500',
+              },
+              {
+                icon: (
+                  <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                ),
+                title: 'Bước 3: Bỏ Phiếu',
+                desc: 'Chọn ứng viên yêu thích và xác nhận giao dịch trên blockchain',
+                color: 'from-green-500 to-emerald-500',
+              },
+            ].map((item, idx) => (
+              <div key={idx} className="group relative">
+                <div className={`absolute inset-0 bg-gradient-to-br ${item.color} rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity`}></div>
+                <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-700/50 hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                  <div className={`inline-flex p-4 bg-gradient-to-br ${item.color} rounded-2xl text-white mb-6 shadow-lg`}>
+                    {item.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{item.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Features Section */}
+        <div className="mt-20 animate-fadeIn" style={{ animationDelay: '0.5s' }}>
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 rounded-3xl blur-2xl opacity-10"></div>
+            <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl p-12 border border-white/20 dark:border-gray-700/50">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4">
+                  Tại sao chọn Blockchain?
+                </h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Công nghệ tiên tiến đảm bảo tính minh bạch và công bằng
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-4 gap-6">
+                {[
+                  { icon: '🔒', title: 'Bảo mật', desc: 'Dữ liệu được mã hóa' },
+                  { icon: '👁️', title: 'Minh bạch', desc: 'Có thể kiểm tra' },
+                  { icon: '⚡', title: 'Nhanh chóng', desc: 'Kết quả tức thì' },
+                  { icon: '✅', title: 'Công bằng', desc: 'Không thể gian lận' },
+                ].map((item, idx) => (
+                  <div key={idx} className="text-center p-6 rounded-2xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-300 group cursor-pointer">
+                    <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
+                    <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{item.title}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
                   </div>
                 ))}
               </div>

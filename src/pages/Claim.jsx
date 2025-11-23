@@ -186,6 +186,90 @@ const Claim = () => {
               </div>
             </div>
           )}
+
+          {/* Help Section */}
+          <div className="mt-12 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 rounded-3xl blur-2xl opacity-10"></div>
+              <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-700/50">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Hướng dẫn nhận token</h3>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-300 group">
+                      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
+                        1
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-1">Xác thực email</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Sử dụng email sinh viên QNU để xác thực</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-300 group">
+                      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
+                        2
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-1">Kết nối ví</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Kết nối ví MetaMask với tài khoản của bạn</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-300 group">
+                      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
+                        3
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-1">Nhận token</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Nhấn nút "Nhận token" và xác nhận giao dịch</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-2xl p-6">
+                      <div className="flex items-start gap-3">
+                        <svg className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                        <div>
+                          <h4 className="font-bold text-blue-700 dark:text-blue-400 mb-2">Lưu ý quan trọng</h4>
+                          <ul className="text-sm text-blue-600 dark:text-blue-500 space-y-1">
+                            <li>• Mỗi ví chỉ được nhận 1 token duy nhất</li>
+                            <li>• Token không thể chuyển nhượng</li>
+                            <li>• Chỉ nhận được trong khung giờ quy định</li>
+                            <li>• Cần có ETH để trả phí gas</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-800 rounded-2xl p-6">
+                      <div className="flex items-start gap-3">
+                        <svg className="w-6 h-6 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                        <div>
+                          <h4 className="font-bold text-green-700 dark:text-green-400 mb-2">Cần hỗ trợ?</h4>
+                          <p className="text-sm text-green-600 dark:text-green-500">
+                            Liên hệ ban tổ chức qua email hoặc fanpage QNU nếu gặp vấn đề
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
