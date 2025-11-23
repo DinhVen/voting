@@ -10,6 +10,8 @@ import Voting from './pages/Voting';
 import Admin from './pages/Admin';
 import CandidateSignup from './pages/CandidateSignup';
 import Results from './pages/Results';
+import Dashboard from './pages/Dashboard';
+import FAQ from './pages/FAQ';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 
@@ -23,9 +25,11 @@ function AppContent() {
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/claim" element={<Claim />} />
             <Route path="/vote" element={<Voting />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/apply" element={<CandidateSignup />} />
           </Routes>
