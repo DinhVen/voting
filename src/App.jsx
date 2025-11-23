@@ -18,6 +18,7 @@ import Footer from './components/Footer';
 import Loader from './components/Loader';
 import BackToTop from './components/BackToTop';
 import AnimatedBackground from './components/AnimatedBackground';
+import FloatingActions from './components/FloatingActions';
 import './styles/animations.css';
 
 function AppContent() {
@@ -54,6 +55,7 @@ function AppContent() {
         </div>
         <Footer />
         <BackToTop />
+        <FloatingActions />
       </div>
       {isLoading && <Loader message="Đang xử lý giao dịch..." />}
     </>
