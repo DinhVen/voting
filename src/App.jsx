@@ -12,6 +12,7 @@ import CandidateSignup from './pages/CandidateSignup';
 import Results from './pages/Results';
 import Dashboard from './pages/Dashboard';
 import FAQ from './pages/FAQ';
+import CandidateDetail from './pages/CandidateDetail';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 
@@ -28,6 +29,7 @@ function AppContent() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/claim" element={<Claim />} />
             <Route path="/vote" element={<Voting />} />
+            <Route path="/candidate/:id" element={<CandidateDetail />} />
             <Route path="/results" element={<Results />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/admin" element={<Admin />} />
