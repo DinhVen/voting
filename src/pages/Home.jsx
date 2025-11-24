@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { Web3Context } from '../context/Web3Context';
+import CandidateCarousel3D from '../components/CandidateCarousel3D';
 
 const Home = () => {
   const { schedule, votingContract, candidateMedia } = useContext(Web3Context);
@@ -307,7 +308,7 @@ const Home = () => {
           </div>
         )}
 
-        {/* Top Candidates Section */}
+        {/* 3D Carousel Candidates */}
         {topCandidates.length > 0 && (
           <div className="mt-20 animate-fadeIn">
             <div className="text-center mb-12">
@@ -316,46 +317,33 @@ const Home = () => {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
                 <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white">
-                  Top ứng viên dẫn đầu
+                  Ứng viên nổi bật
                 </h2>
               </div>
               <p className="text-lg text-gray-600 dark:text-gray-400">
-                Những gương mặt đang được yêu thích nhất
+                Khám phá các ứng viên trong không gian 3D
               </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {topCandidates.map((candidate, idx) => (
-                <div key={candidate.id} className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                  <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/20 dark:border-gray-700/50 hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                    {idx === 0 && (
-                      <div className="absolute top-4 right-4 z-10 bg-gradient-to-br from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        #1
-                      </div>
-                    )}
-                    <div className="relative h-64 overflow-hidden">
-                      <img
-                        src={candidate.image || 'https://via.placeholder.com/300x400'}
-                        alt={candidate.name}
-                        className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                        <h3 className="text-xl font-black mb-1">{candidate.name}</h3>
-                        <p className="text-sm opacity-90">MSSV: {candidate.mssv}</p>
-                      </div>
-                    </div>
-                    <div className="p-6 text-center">
-                      <div className="text-3xl font-black bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
-                        {candidate.votes} phiếu
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+
+            {/* 3D Carousel */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-3xl"></div>
+              <div className="relative bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-700/50">
+                <CandidateCarousel3D candidates={topCandidates} />
+              </div>
+            </div>
+
+            {/* View All Button */}
+            <div className="text-center mt-8">
+              <Link
+                to="/vote"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              >
+                Xem tất cả ứng viên
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
             </div>
           </div>
         )}
