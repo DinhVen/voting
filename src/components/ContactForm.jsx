@@ -38,27 +38,9 @@ const ContactForm = () => {
     setSubmitStatus(null);
 
     try {
-      // Create email body
-      const emailBody = `
-[QNU VOTING - GÓP Ý MỚI]
-
-Họ tên: ${formData.hoTen}
-Email: ${formData.email}
-Số điện thoại: ${formData.sdt}
-Lớp: ${formData.lop}
-MSSV: ${formData.mssv}
-
-Nội dung góp ý:
-${formData.gopY}
-
----
-Thời gian: ${new Date().toLocaleString('vi-VN')}
-      `;
-
-      // Open email client with pre-filled content
-      const mailtoLink = `mailto:van4551050252@st.qnu.edu.vn?subject=[QNU Voting] Góp ý từ ${encodeURIComponent(formData.hoTen)}&body=${encodeURIComponent(emailBody)}`;
-      window.open(mailtoLink, '_blank');
-
+      // TODO: Send to backend API
+      // For now, just show success message
+      
       // Show success message
       setSubmitStatus('success');
       
