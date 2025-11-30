@@ -212,13 +212,13 @@ const CandidateSignup = () => {
                     </label>
                     <input
                       type="text"
-                      value={formData.mssv}
-                      onChange={(e) => setFormData({ ...formData, mssv: e.target.value })}
-                      className="w-full border dark:border-gray-600 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-all duration-300"
-                      placeholder="10 ch? s?"
-                      pattern=\"\\d{10}\"
-                      required
-                    />
+                    value={formData.mssv}
+                    onChange={(e) => setFormData({ ...formData, mssv: e.target.value })}
+                    className="w-full border dark:border-gray-600 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-all duration-300"
+                    placeholder="10 ch? s?"
+                    pattern="[0-9]{10}"
+                    required
+                  />
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">8 chữ số</p>
                   </div>
 
